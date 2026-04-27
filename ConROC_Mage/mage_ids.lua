@@ -223,6 +223,7 @@ ids.Rank = {
 	FrostNovaRank2 = 865,
 	FrostNovaRank3 = 6131,
 	FrostNovaRank4 = 10230,
+	FrostNovaRank5 = 27088,
 	FrostWardRank1 = 6143,
 	FrostWardRank2 = 8461,
 	FrostWardRank3 = 8462,
@@ -507,7 +508,8 @@ function ConROC:UpdateSpellID()
 	elseif IsSpellKnown(ids.Rank.FrostArmorRank3) then ids.Ability.IceArmor = ids.Rank.FrostArmorRank3;
 	elseif IsSpellKnown(ids.Rank.FrostArmorRank2) then ids.Ability.IceArmor = ids.Rank.FrostArmorRank2; end
 
-	if IsSpellKnown(ids.Rank.FrostNovaRank4) then ids.Ability.FrostNova = ids.Rank.FrostNovaRank4;
+	if IsSpellKnown(ids.Rank.FrostNovaRank5) then ids.Ability.FrostNova = ids.Rank.FrostNovaRank5;
+	elseif IsSpellKnown(ids.Rank.FrostNovaRank4) then ids.Ability.FrostNova = ids.Rank.FrostNovaRank4;
 	elseif IsSpellKnown(ids.Rank.FrostNovaRank3) then ids.Ability.FrostNova = ids.Rank.FrostNovaRank3;
 	elseif IsSpellKnown(ids.Rank.FrostNovaRank2) then ids.Ability.FrostNova = ids.Rank.FrostNovaRank2; end
 end

@@ -6,6 +6,14 @@ This project began as a fork of [ConROC by Vae2009](https://github.com/Vae2009/C
 
 ---
 
+## [2.12.1] – Mage Frost Nova Rank 5 Fix
+
+### Fixed
+
+- **Mage – Frost Nova capped at Rank 4 when Rank 5 is known** – `UpdateSpellID()` only checked up to `FrostNovaRank4` and the Rank 5 spell ID (`27088`) was absent from `ids.Rank`. Players who had trained Frost Nova Rank 5 were silently assigned Rank 4 in the rotation. Added `FrostNovaRank5 = 27088` to the rank table and prepended the Rank 5 check to the detection chain.
+
+---
+
 ## [2.12.0] – Final Six Class Module Overhauls
 
 ### Fixed
