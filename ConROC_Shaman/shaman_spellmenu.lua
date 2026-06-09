@@ -26,6 +26,10 @@ local defaults = {
 	["ConROC_Melee_OH_FlametongueWeapon"] = true,
 	["ConROC_Melee_MH_WindfuryWeapon"] = true,
 	["ConROC_Caster_Option_AoE"] = true,
+	["ConROC_Caster_Air_WindfuryTotem"] = true,
+	["ConROC_Melee_Air_WindfuryTotem"] = true,
+	["ConROC_Tank_Air_WindfuryTotem"] = true,
+	["ConROC_PvP_Air_WindfuryTotem"] = true,
 }
 
 ConROCShamanSpells = ConROCShamanSpells or defaults;
@@ -154,6 +158,14 @@ function ConROC:RotationChoices()
 		groupType = "radioButtons"
 		},
 		{
+		frameName = "Air Totem",
+		spells = {
+			{spellID = ids.Ability.WindfuryTotem, spellCheckbox = "Air_WindfuryTotem", reqLevel = 32, type = "spell"},
+			{spellID = ids.Ability.GraceofAirTotem, spellCheckbox = "Air_GraceofAirTotem", reqLevel = 42, type = "spell"},
+		},
+		groupType = "radioButtons"
+		},
+		{
 		frameName = "Options",
 		spells = {
 			{spellID = ids.Ability.RockbiterWeapon, spellCheckbox = "Option_Imbue", reqLevel = 1, type="custom", icon = 136086, customName="Weapon imbue reminder"},
@@ -162,17 +174,6 @@ function ConROC:RotationChoices()
 		}
 		}
 	}
-	if ConROC.Seasons.IsSoD then
-	  	table.insert(ConROC_RotationSettingsTable, 3,
-		{
-	    frameName = "Shields",
-	    spells = {
-	        {spellID = ids.Ability.LightningShield, spellCheckbox = "Shield_LightningShield", reqLevel = 8, type = "spell"},
-		    {spellID = ids.Runes.WaterShield, spellCheckbox = "Shield_WaterShield", reqLevel = 1, type = "spell"},
-		},
-		groupType = "radioButtons"
-	 	})
-	end
 end
 
 function ConROC:SpellmenuClass()

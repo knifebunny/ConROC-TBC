@@ -66,7 +66,7 @@ function ConROC:PLAYER_TOTEM_UPDATE()
     end
 end
 
-local Racial, Spec, Ability, Rank, Ele_Talent, Enh_Talent, Resto_Talent, Engrave, Runes, Buff, Debuff = ids.Racial, ids.Spec, ids.Ability, ids.Rank, ids.Elemental_Talent, ids.Enhancement_Talent, ids.Restoration_Talent, ids.Engrave, ids.Runes, ids.Buff, ids.Debuff;
+local Racial, Spec, Ability, Rank, Ele_Talent, Enh_Talent, Resto_Talent, Buff = ids.Racial, ids.Spec, ids.Ability, ids.Rank, ids.Elemental_Talent, ids.Enhancement_Talent, ids.Restoration_Talent, ids.Buff;
 local _tickerVar = 10;
 local _mhP = nil;
 local _ohP = nil;
@@ -180,16 +180,6 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
 	local _WaterShield, _WaterShield_RDY = ConROC:AbilityReady(Ability.WaterShield, timeShift);
 		local _WaterShield_BUFF = ConROC:Aura(_WaterShield, timeShift);
 
---Runes
-    local _EarthShield, _EarthShield_RDY = ConROC:AbilityReady(Runes.EarthShield, timeShift);
-        local _EarthShield_BUFF = ConROC:Aura(_EarthShield, timeShift);
-    local _FeralSpirit, _FeralSpirit_RDY = ConROC:AbilityReady(Runes.FeralSpirit, timeShift);
-    local _LavaBurst, _LavaBurst_RDY = ConROC:AbilityReady(Runes.LavaBurst, timeShift);
-    local _LavaLash, _LavaLash_RDY = ConROC:AbilityReady(Runes.LavaLash, timeShift);
-        local _, _MaelstromWeapon_COUNT = ConROC:Aura(Debuff.MaelstromWeapon, timeShift);
-    local _MoltenBlast, _MoltenBlast_RDY = ConROC:AbilityReady(Runes.MoltenBlast, timeShift);
-        local _PowerSurge_BUFF = ConROC:Aura(Buff.PowerSurge, timeShift);
-
 --Conditions
     local resting = IsResting();
     local mounted = IsMounted();
@@ -197,8 +187,6 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
 	local hasMHEnch, _, mhCharges, mhEnchID, hasOHEnch, _, ohCharges, ohEnchId = GetWeaponEnchantInfo();
 
 --Indicators
-    ConROC:AbilityRaidBuffs(_EarthShield, _EarthShield_RDY and not _EarthShield_BUFF and ConROC:OneBuff(_EarthShield));
-
     ConROC:AbilityInterrupt(_EarthShockR1, _EarthShockR1_RDY and ConROC:Interrupt());
     ConROC:AbilityPurge(_Purge, _Purge_RDY and ConROC:Purgable());
 
@@ -317,147 +305,7 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
 --Rotations
     repeat
         while(true) do
-            if ConROC.Seasons.IsSoD then
-                if _FeralSpirit_RDY then
-                    tinsert(ConROC.SuggestedSpells, _FeralSpirit);
-                    _FeralSpirit_RDY = false;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _FlameShock_RDY and not _FlameShock_DEBUFF and ConROC:CheckBox(ConROC_SM_Role_Tank) then
-                    tinsert(ConROC.SuggestedSpells, _FlameShock);
-                    _FlameShock_DEBUFF = true;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _ChainLightning_RDY and (_MaelstromWeapon_COUNT >= 5 or _PowerSurge_BUFF) and _enemies_in_20yrds >= 2 then
-                    tinsert(ConROC.SuggestedSpells, _ChainLightning);
-                    _ChainLightning_RDY = false;
-                    _MaelstromWeapon_COUNT = 0;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _LightningBolt_RDY and _MaelstromWeapon_COUNT >= 5 and ConROC:CheckBox(ConROC_SM_Role_Tank) then
-                    tinsert(ConROC.SuggestedSpells, _LightningBolt);
-                    _MaelstromWeapon_COUNT = 0;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _MoltenBlast_RDY and ConROC:CheckBox(ConROC_SM_Role_Tank) then
-                    tinsert(ConROC.SuggestedSpells, _MoltenBlast);
-                    _MoltenBlast_RDY = false;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _Stormstrike_RDY and not _Stormstrike_DEBUFF then
-                    tinsert(ConROC.SuggestedSpells, _Stormstrike);
-                    _Stormstrike_RDY = false;
-                    _Stormstrike_DEBUFF = true;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _EarthShock_RDY and ConROC:CheckBox(ConROC_SM_Role_Tank) then
-                    tinsert(ConROC.SuggestedSpells, _EarthShock);
-                    _EarthShock_RDY = false;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _LavaBurst_RDY and (_MaelstromWeapon_COUNT >= 5 or _PowerSurge_BUFF) then
-                    tinsert(ConROC.SuggestedSpells, _LavaBurst);
-                    _LavaBurst_RDY = false;
-                    _MaelstromWeapon_COUNT = 0;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _LightningBolt_RDY and _MaelstromWeapon_COUNT >= 5 then
-                    tinsert(ConROC.SuggestedSpells, _LightningBolt);
-                    _MaelstromWeapon_COUNT = 0;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _FlameShock_RDY and not _FlameShock_DEBUFF then
-                    tinsert(ConROC.SuggestedSpells, _FlameShock);
-                    _FlameShock_DEBUFF = true;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _LavaBurst_RDY and _FlameShock_DEBUFF and not ConROC:RuneEquipped(Engrave.MaelstromWeapon , "waist") then
-                    tinsert(ConROC.SuggestedSpells, _LavaBurst);
-                    _LavaBurst_RDY = false;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _EarthShock_RDY and (not ConROC:RuneEquipped(Engrave.RollingThunder , "wrist") or (_LightningShield_CHARGE >= 8 and ConROC:RuneEquipped(Engrave.RollingThunder , "wrist"))) then
-                    tinsert(ConROC.SuggestedSpells, _EarthShock);
-                    _EarthShock_RDY = false;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if _LavaLash_RDY then
-                    tinsert(ConROC.SuggestedSpells, _LavaLash);
-                    _LavaLash_RDY = false;
-                    _Queue = _Queue + 1;
-                    break;
-                end
-
-                if ConROC:CheckBox(ConROC_SM_Option_Totems) then
-                    if _SearingTotem_RDY and _SearingTotem_DUR < 0.1 and _target_in_20yrds then
-                        tinsert(ConROC.SuggestedSpells, _SearingTotem);
-                        _SearingTotem_RDY = false;
-                        _Queue = _Queue + 1;
-                        break;
-                    end
-
-                    if _StrengthofEarthTotem_RDY and _StrengthofEarthTotem_DUR < 0.1 and _target_in_20yrds then
-                        tinsert(ConROC.SuggestedSpells, _StrengthofEarthTotem);
-                        _StrengthofEarthTotem_RDY = false;
-                        _Queue = _Queue + 1;
-                        break;
-                    end
-
-                    if _GraceofAirTotem_RDY and _GraceofAirTotem_DUR < 0.1 and _target_in_20yrds then
-                        tinsert(ConROC.SuggestedSpells, _GraceofAirTotem);
-                        _GraceofAirTotem_RDY = false;
-                        _Queue = _Queue + 1;
-                        break;
-                    end
-
-                    if _ManaSpringTotem_RDY and _ManaSpringTotem_DUR < 0.1 and _target_in_20yrds then
-                        tinsert(ConROC.SuggestedSpells, _ManaSpringTotem);
-                        _ManaSpringTotem_RDY = false;
-                        _Queue = _Queue + 1;
-                        break;
-                    end
-                end
-
-                if ConROC_AoEButton:IsVisible() then
-                    if _ChainLightning_RDY and not ConROC:RuneEquipped(Engrave.MaelstromWeapon , "waist") then
-                        tinsert(ConROC.SuggestedSpells, _ChainLightning);
-                        _ChainLightning_RDY = false;
-                        _Queue = _Queue + 1;
-                        break;
-                    end
-                else
-                    if _LightningBolt_RDY and not ConROC:RuneEquipped(Engrave.MaelstromWeapon , "waist") then
-                        tinsert(ConROC.SuggestedSpells, _LightningBolt);
-                        _Queue = _Queue + 1;
-                        break;
-                    end
-                end
-            else--not SoD
-                if (_Bloodlust_RDY or _Heroism_RDY) and _in_combat then
+            if (_Bloodlust_RDY or _Heroism_RDY) and _in_combat then
                     local _blSpell = _Bloodlust_RDY and _Bloodlust or _Heroism;
                     tinsert(ConROC.SuggestedSpells, _blSpell);
                     _Bloodlust_RDY = false;
@@ -479,14 +327,14 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
                         break;
                     end
 
-                    if _EarthShock_RDY and (_Clearcasting_BUFF or ((_Target_Percent_Health <= 5 and ConROC:Raidmob()) or (_Target_Percent_Health <= 20 and not ConROC:Raidmob()))) then
-                        tinsert(ConROC.SuggestedSpells, _EarthShock);
+                    if _FlameShock_RDY and not _FlameShock_DEBUFF then
+                        tinsert(ConROC.SuggestedSpells, _FlameShock);
                         _Queue = _Queue + 1;
                         break;
                     end
 
-                    if _FlameShock_RDY and not _FlameShock_DEBUFF then
-                        tinsert(ConROC.SuggestedSpells, _FlameShock);
+                    if _EarthShock_RDY then
+                        tinsert(ConROC.SuggestedSpells, _EarthShock);
                         _Queue = _Queue + 1;
                         break;
                     end
@@ -497,10 +345,50 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
                         break;
                     end
 
-                    if ConROC:CheckBox(ConROC_SM_Option_Totems) and _SearingTotem_RDY and _SearingTotem_DUR < 0.1 then
-                        tinsert(ConROC.SuggestedSpells, _SearingTotem);
-                        _Queue = _Queue + 1;
-                        break;
+                    if ConROC:CheckBox(ConROC_SM_Option_Totems) then
+                        if _StrengthofEarthTotem_RDY and _StrengthofEarthTotem_DUR < 0.1 and _target_in_20yrds then
+                            tinsert(ConROC.SuggestedSpells, _StrengthofEarthTotem);
+                            _Queue = _Queue + 1;
+                            break;
+                        end
+
+                        if ConROC_AoEButton:IsVisible() then
+                            if _MagmaTotem_RDY and _MagmaTotem_DUR < 0.1 and _target_in_20yrds then
+                                tinsert(ConROC.SuggestedSpells, _MagmaTotem);
+                                _Queue = _Queue + 1;
+                                break;
+                            end
+
+                            if _FireNovaTotem_RDY and _FireNovaTotem_DUR < 0.1 and _target_in_20yrds then
+                                tinsert(ConROC.SuggestedSpells, _FireNovaTotem);
+                                _Queue = _Queue + 1;
+                                break;
+                            end
+                        else
+                            if _SearingTotem_RDY and _SearingTotem_DUR < 0.1 and _target_in_20yrds then
+                                tinsert(ConROC.SuggestedSpells, _SearingTotem);
+                                _Queue = _Queue + 1;
+                                break;
+                            end
+                        end
+
+                        if ConROC:CheckBox(ConROC_SM_Air_WindfuryTotem) and _WindfuryTotem_RDY and _WindfuryTotem_DUR < 0.1 and _target_in_20yrds then
+                            tinsert(ConROC.SuggestedSpells, _WindfuryTotem);
+                            _Queue = _Queue + 1;
+                            break;
+                        end
+
+                        if ConROC:CheckBox(ConROC_SM_Air_GraceofAirTotem) and _GraceofAirTotem_RDY and _GraceofAirTotem_DUR < 0.1 and _target_in_20yrds then
+                            tinsert(ConROC.SuggestedSpells, _GraceofAirTotem);
+                            _Queue = _Queue + 1;
+                            break;
+                        end
+
+                        if _ManaSpringTotem_RDY and _ManaSpringTotem_DUR < 0.1 and _target_in_20yrds then
+                            tinsert(ConROC.SuggestedSpells, _ManaSpringTotem);
+                            _Queue = _Queue + 1;
+                            break;
+                        end
                     end
                 elseif ConROC:CheckBox(ConROC_SM_Role_Caster) then
                     if ConROC:CheckBox(ConROC_SM_Option_Totems) then
@@ -591,7 +479,6 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
                         end
                     end
                 end
-            end
 
             tinsert(ConROC.SuggestedSpells, 26008); --Waiting Spell Icon
             _Queue = _Queue + 3;
@@ -606,44 +493,26 @@ function ConROC.Shaman.Defense(_, timeShift, currentSpell, gcd)
 	wipe(ConROC.SuggestedDefSpells);
 	ConROC:Stats();
 
---Abilities	
+--Abilities
 	local _LightningShield, _LightningShield_RDY = ConROC:AbilityReady(Ability.LightningShield, timeShift);
 		local _LightningShield_BUFF = ConROC:Aura(_LightningShield, timeShift);
-
-    local _ShamanisticRage_Rune, _ShamanisticRage_Rune_RDY = ConROC:AbilityReady(Runes.ShamanisticRage, timeShift);
-	local _WaterShield_Rune, _WaterShield_Rune_RDY = ConROC:AbilityReady(Runes.WaterShield, timeShift);
-        local _WaterShield_Rune_BUFF = ConROC:Aura(_WaterShield_Rune, timeShift);
-	local _ShamanisticRage_TBC, _ShamanisticRage_TBC_RDY = ConROC:AbilityReady(Ability.ShamanisticRage, timeShift);
-	local _WaterShield_TBC, _WaterShield_TBC_RDY = ConROC:AbilityReady(Ability.WaterShield, timeShift);
-		local _WaterShield_TBC_BUFF = ConROC:Aura(_WaterShield_TBC, timeShift);
+	local _ShamanisticRage, _ShamanisticRage_RDY = ConROC:AbilityReady(Ability.ShamanisticRage, timeShift);
+	local _WaterShield, _WaterShield_RDY = ConROC:AbilityReady(Ability.WaterShield, timeShift);
+		local _WaterShield_BUFF = ConROC:Aura(_WaterShield, timeShift);
 
 --Indicators
 
 --Warnings
 
 --Rotations
-    if ConROC.Seasons.IsSoD then
-        if ConROC:CheckBox(ConROC_SM_Shield_LightningShield) and _LightningShield_RDY and not _LightningShield_BUFF then
-            tinsert(ConROC.SuggestedDefSpells, _LightningShield);
-        end
+    if _WaterShield_RDY and not _WaterShield_BUFF and not _LightningShield_BUFF then
+        tinsert(ConROC.SuggestedDefSpells, _WaterShield);
+    elseif _LightningShield_RDY and not _LightningShield_BUFF and not _WaterShield_BUFF then
+        tinsert(ConROC.SuggestedDefSpells, _LightningShield);
+    end
 
-        if ConROC:CheckBox(ConROC_SM_Shield_WaterShield) and _WaterShield_Rune_RDY and not _WaterShield_Rune_BUFF then
-            tinsert(ConROC.SuggestedDefSpells, _WaterShield_Rune);
-        end
-
-        if _ShamanisticRage_Rune_RDY then
-            tinsert(ConROC.SuggestedDefSpells, _ShamanisticRage_Rune);
-        end
-    else
-        if _WaterShield_TBC_RDY and not _WaterShield_TBC_BUFF and not _LightningShield_BUFF then
-            tinsert(ConROC.SuggestedDefSpells, _WaterShield_TBC);
-        elseif _LightningShield_RDY and not _LightningShield_BUFF and not _WaterShield_TBC_BUFF then
-            tinsert(ConROC.SuggestedDefSpells, _LightningShield);
-        end
-
-        if _ShamanisticRage_TBC_RDY and _in_combat then
-            tinsert(ConROC.SuggestedDefSpells, _ShamanisticRage_TBC);
-        end
+    if _ShamanisticRage_RDY and _in_combat then
+        tinsert(ConROC.SuggestedDefSpells, _ShamanisticRage);
     end
 return nil;
 end
