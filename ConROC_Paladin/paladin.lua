@@ -319,36 +319,42 @@ function ConROC.Paladin.Damage(_, timeShift, currentSpell, gcd)
 					-- Check for greater versions first, don't suggest regular if greater is active
 					if ConROC:CheckBox(ConROC_SM_Bless_Might) and _BlessingofMight_RDY and not _BlessingofMight_BUFF and not _GreaterBlessingofMight_BUFF then
 						tinsert(ConROC.SuggestedSpells, _BlessingofMight);
+						_BlessingofMight_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_Wisdom) and _BlessingofWisdom_RDY and not _BlessingofWisdom_BUFF and not _GreaterBlessingofWisdom_BUFF then
 						tinsert(ConROC.SuggestedSpells, _BlessingofWisdom);
+						_BlessingofWisdom_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_Kings) and _BlessingofKings_RDY and not _BlessingofKings_BUFF and not _GreaterBlessingofKings_BUFF then
 						tinsert(ConROC.SuggestedSpells, _BlessingofKings);
+						_BlessingofKings_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_Salvation) and _BlessingofSalvation_RDY and not _BlessingofSalvation_BUFF and not _GreaterBlessingofSalvation_BUFF then
 						tinsert(ConROC.SuggestedSpells, _BlessingofSalvation);
+						_BlessingofSalvation_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_Sanctuary) and _BlessingofSanctuary_RDY and not _BlessingofSanctuary_BUFF and not _GreaterBlessingofSanctuary_BUFF then
 						tinsert(ConROC.SuggestedSpells, _BlessingofSanctuary);
+						_BlessingofSanctuary_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_Light) and _BlessingofLight_RDY and not _BlessingofLight_BUFF then
 						tinsert(ConROC.SuggestedSpells, _BlessingofLight);
+						_BlessingofLight_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -356,30 +362,35 @@ function ConROC.Paladin.Damage(_, timeShift, currentSpell, gcd)
 					-- Greater Blessings
 					if ConROC:CheckBox(ConROC_SM_Bless_GreaterMight) and _GreaterBlessingofMight_RDY and not _GreaterBlessingofMight_BUFF then
 						tinsert(ConROC.SuggestedSpells, _GreaterBlessingofMight);
+						_GreaterBlessingofMight_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_GreaterWisdom) and _GreaterBlessingofWisdom_RDY and not _GreaterBlessingofWisdom_BUFF then
 						tinsert(ConROC.SuggestedSpells, _GreaterBlessingofWisdom);
+						_GreaterBlessingofWisdom_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_GreaterKings) and _GreaterBlessingofKings_RDY and not _GreaterBlessingofKings_BUFF then
 						tinsert(ConROC.SuggestedSpells, _GreaterBlessingofKings);
+						_GreaterBlessingofKings_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_GreaterSanctuary) and _GreaterBlessingofSanctuary_RDY and not _GreaterBlessingofSanctuary_BUFF then
 						tinsert(ConROC.SuggestedSpells, _GreaterBlessingofSanctuary);
+						_GreaterBlessingofSanctuary_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
 					
 					if ConROC:CheckBox(ConROC_SM_Bless_GreaterSalvation) and _GreaterBlessingofSalvation_RDY and not _GreaterBlessingofSalvation_BUFF then
 						tinsert(ConROC.SuggestedSpells, _GreaterBlessingofSalvation);
+						_GreaterBlessingofSalvation_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end

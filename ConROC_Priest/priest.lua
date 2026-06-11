@@ -242,6 +242,7 @@ function ConROC.Priest.Damage(_, timeShift, currentSpell, gcd)
 				-- Mind Flay filler
 				if ConROC:CheckBox(ConROC_SM_Filler_MindFlay) and _MindFlay_RDY then
 					tinsert(ConROC.SuggestedSpells, _MindFlay);
+					_MindFlay_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
@@ -328,12 +329,14 @@ function ConROC.Priest.Damage(_, timeShift, currentSpell, gcd)
 
 				if ConROC:CheckBox(ConROC_SM_Filler_MindFlay) and _MindFlay_RDY then
 					tinsert(ConROC.SuggestedSpells, _MindFlay);
+					_MindFlay_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
 
 				if ConROC:CheckBox(ConROC_SM_Filler_Smite) and _Smite_RDY then
 					tinsert(ConROC.SuggestedSpells, _Smite);
+					_Smite_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end

@@ -317,30 +317,35 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
                 if ConROC:CheckBox(ConROC_SM_Role_Melee) then
                     if _LightningBolt_RDY and not _target_in_melee then
                         tinsert(ConROC.SuggestedSpells, _LightningBolt);
+                        _LightningBolt_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _Stormstrike_RDY and _target_in_melee then
                         tinsert(ConROC.SuggestedSpells, _Stormstrike);
+                        _Stormstrike_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _FlameShock_RDY and not _FlameShock_DEBUFF then
                         tinsert(ConROC.SuggestedSpells, _FlameShock);
+                        _FlameShock_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _EarthShock_RDY then
                         tinsert(ConROC.SuggestedSpells, _EarthShock);
+                        _EarthShock_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _EarthShockR1_RDY and (ConROC:TalentChosen(Spec.Elemental, Ele_Talent.ElementalFocus) or ConROC:TalentChosen(Spec.Elemental, Ele_Talent.ElementalDevastation)) then
                         tinsert(ConROC.SuggestedSpells, _EarthShockR1);
+                        _EarthShockR1_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
@@ -348,6 +353,7 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
                     if ConROC:CheckBox(ConROC_SM_Option_Totems) then
                         if _StrengthofEarthTotem_RDY and _StrengthofEarthTotem_DUR < 0.1 and _target_in_20yrds then
                             tinsert(ConROC.SuggestedSpells, _StrengthofEarthTotem);
+                            _StrengthofEarthTotem_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
@@ -355,18 +361,21 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
                         if ConROC_AoEButton:IsVisible() then
                             if _MagmaTotem_RDY and _MagmaTotem_DUR < 0.1 and _target_in_20yrds then
                                 tinsert(ConROC.SuggestedSpells, _MagmaTotem);
+                                _MagmaTotem_RDY = false;
                                 _Queue = _Queue + 1;
                                 break;
                             end
 
                             if _FireNovaTotem_RDY and _FireNovaTotem_DUR < 0.1 and _target_in_20yrds then
                                 tinsert(ConROC.SuggestedSpells, _FireNovaTotem);
+                                _FireNovaTotem_RDY = false;
                                 _Queue = _Queue + 1;
                                 break;
                             end
                         else
                             if _SearingTotem_RDY and _SearingTotem_DUR < 0.1 and _target_in_20yrds then
                                 tinsert(ConROC.SuggestedSpells, _SearingTotem);
+                                _SearingTotem_RDY = false;
                                 _Queue = _Queue + 1;
                                 break;
                             end
@@ -374,18 +383,21 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
 
                         if ConROC:CheckBox(ConROC_SM_Air_WindfuryTotem) and _WindfuryTotem_RDY and _WindfuryTotem_DUR < 0.1 and _target_in_20yrds then
                             tinsert(ConROC.SuggestedSpells, _WindfuryTotem);
+                            _WindfuryTotem_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
 
                         if ConROC:CheckBox(ConROC_SM_Air_GraceofAirTotem) and _GraceofAirTotem_RDY and _GraceofAirTotem_DUR < 0.1 and _target_in_20yrds then
                             tinsert(ConROC.SuggestedSpells, _GraceofAirTotem);
+                            _GraceofAirTotem_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
 
                         if _ManaSpringTotem_RDY and _ManaSpringTotem_DUR < 0.1 and _target_in_20yrds then
                             tinsert(ConROC.SuggestedSpells, _ManaSpringTotem);
+                            _ManaSpringTotem_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
@@ -394,12 +406,14 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
                     if ConROC:CheckBox(ConROC_SM_Option_Totems) then
                         if (not ConROC_AoEButton:IsVisible() or (not _target_in_melee or _enemies_in_melee < 2)) and _SearingTotem_RDY and _SearingTotem_DUR < 0.1 then
                             tinsert(ConROC.SuggestedSpells, _SearingTotem);
+                            _SearingTotem_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
 
                         if (ConROC_AoEButton:IsVisible() or _enemies_in_melee > 2) and _FireNovaTotem_RDY and _FireNovaTotem_DUR < 0.1 then
                             tinsert(ConROC.SuggestedSpells, _FireNovaTotem);
+                            _FireNovaTotem_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
@@ -407,54 +421,63 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
 
                     if _ElementalMastery_RDY  and _in_combat then
                         tinsert(ConROC.SuggestedSpells, _ElementalMastery);
+                        _ElementalMastery_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _EarthShock_RDY and (_Clearcasting_BUFF or ((_Target_Percent_Health <= 5 and ConROC:Raidmob()) or (_Target_Percent_Health <= 20 and not ConROC:Raidmob()))) then
                         tinsert(ConROC.SuggestedSpells, _EarthShock);
+                        _EarthShock_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _FlameShock_RDY and not _FlameShock_DEBUFF then
                         tinsert(ConROC.SuggestedSpells, _FlameShock);
+                        _FlameShock_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _EarthShockR1_RDY and (ConROC:TalentChosen(Spec.Elemental, Ele_Talent.ElementalFocus) or ConROC:TalentChosen(Spec.Elemental, Ele_Talent.ElementalDevastation)) then
                         tinsert(ConROC.SuggestedSpells, _EarthShockR1);
+                        _EarthShockR1_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if ConROC_AoEButton:IsVisible() and _ChainLightning_RDY and not _is_moving then
                         tinsert(ConROC.SuggestedSpells, _ChainLightning);
+                        _ChainLightning_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _LightningBolt_RDY and not _is_moving then
                         tinsert(ConROC.SuggestedSpells, _LightningBolt);
+                        _LightningBolt_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _FrostShock_RDY and _FlameShock_DEBUFF then
                         tinsert(ConROC.SuggestedSpells, _FrostShock);
+                        _FrostShock_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
                 else
                     if _ChainLightning_RDY and _Clearcasting_BUFF then
                         tinsert(ConROC.SuggestedSpells, _ChainLightning);
+                        _ChainLightning_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _LightningBolt_RDY and not _target_in_melee then
                         tinsert(ConROC.SuggestedSpells, _LightningBolt);
+                        _LightningBolt_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
@@ -462,18 +485,21 @@ function ConROC.Shaman.Damage(_, timeShift, currentSpell, gcd)
                     if _target_in_melee then
                         if _Stormstrike_RDY then
                             tinsert(ConROC.SuggestedSpells, _Stormstrike);
+                            _Stormstrike_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
 
                         if _EarthShock_RDY and (_Clearcasting_BUFF or ((_Target_Percent_Health <= 5 and ConROC:Raidmob()) or (_Target_Percent_Health <= 20 and not ConROC:Raidmob()))) then
                             tinsert(ConROC.SuggestedSpells, _EarthShock);
+                            _EarthShock_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
 
                         if _EarthShockR1_RDY and (ConROC:TalentChosen(Spec.Elemental, Ele_Talent.ElementalFocus) or ConROC:TalentChosen(Spec.Elemental, Ele_Talent.ElementalDevastation)) then
                             tinsert(ConROC.SuggestedSpells, _EarthShockR1);
+                            _EarthShockR1_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end

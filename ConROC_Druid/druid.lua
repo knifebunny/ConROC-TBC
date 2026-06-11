@@ -394,6 +394,7 @@ function ConROC.Druid.Damage(_, timeShift, currentSpell, gcd)
                     if not _in_combat then
                         if _Starfire_RDY then
                             tinsert(ConROC.SuggestedSpells, _Starfire);
+                            _Starfire_RDY = false;
                             _Queue = _Queue + 1;
                             break;
                         end
@@ -442,12 +443,14 @@ function ConROC.Druid.Damage(_, timeShift, currentSpell, gcd)
                     -- Starfire: primary filler (longer cast, higher damage)
                     if _Starfire_RDY then
                         tinsert(ConROC.SuggestedSpells, _Starfire);
+                        _Starfire_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
 
                     if _Wrath_RDY then
                         tinsert(ConROC.SuggestedSpells, _Wrath);
+                        _Wrath_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end
@@ -475,6 +478,7 @@ function ConROC.Druid.Damage(_, timeShift, currentSpell, gcd)
 
                     if _Wrath_RDY then
                         tinsert(ConROC.SuggestedSpells, _Wrath);
+                        _Wrath_RDY = false;
                         _Queue = _Queue + 1;
                         break;
                     end

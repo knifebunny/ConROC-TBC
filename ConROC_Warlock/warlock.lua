@@ -184,6 +184,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 			--Mana--
 			if ConROC:CheckBox(ConROC_SM_Mana_DrainMana) and _DrainMana_RDY and tarHasMana > 0 and _Mana_Percent < 20 then
 				tinsert(ConROC.SuggestedSpells, _DrainMana);
+				_DrainMana_RDY = false;
 				_Queue = _Queue + 1;
 				break;
 			end
@@ -259,6 +260,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 					-- Death Coil for survivability when enemies in melee
 					if _DeathCoil_RDY and _enemies_in_melee >= 1 and _Player_Percent_Health < 50 then
 						tinsert(ConROC.SuggestedSpells, _DeathCoil);
+						_DeathCoil_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -274,6 +276,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 					-- Howl of Terror for multiple enemies in melee
 					if _HowlofTerror_RDY and _enemies_in_melee >= 2 then
 						tinsert(ConROC.SuggestedSpells, _HowlofTerror);
+						_HowlofTerror_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -281,6 +284,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 					-- Felhunter Spell Lock on casting targets
 					if _SpellLock_RDY and _is_Casting and tarHasMana > 0 then
 						tinsert(ConROC.SuggestedSpells, _SpellLock);
+						_SpellLock_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -326,6 +330,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 					(ConROC:CheckBox(ConROC_SM_Curse_Exhaustion) and not _CurseofExhaustion_DEBUFF)
 				) then
 					tinsert(ConROC.SuggestedSpells, _AmplifyCurse);
+					_AmplifyCurse_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
@@ -424,6 +429,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 					-- Drain Mana vs healers/casters (higher priority in PVP)
 					if ConROC:CheckBox(ConROC_SM_Mana_DrainMana) and _DrainMana_RDY and tarHasMana > 0 and _Target_Percent_Health > 30 then
 						tinsert(ConROC.SuggestedSpells, _DrainMana);
+						_DrainMana_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -431,6 +437,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 					-- PVP Shadowburn at 20%
 					if _Shadowburn_RDY and _Target_Percent_Health <= 20 then
 						tinsert(ConROC.SuggestedSpells, _Shadowburn);
+						_Shadowburn_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -438,6 +445,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 					-- PVP Drain Soul for shards
 					if _DrainSoul_RDY and _SoulShards < ConROC_SM_Option_SoulShard:GetNumber() and _Target_Percent_Health <= 20 then
 						tinsert(ConROC.SuggestedSpells, _DrainSoul);
+						_DrainSoul_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -460,6 +468,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 
 				if _DrainSoul_RDY and _SoulShards < ConROC_SM_Option_SoulShard:GetNumber() and ((ConROC:Raidmob() and _Target_Percent_Health <= 5) or (not ConROC:Raidmob() and _Target_Percent_Health <= 20)) then --Soul Shard counter needed.
 					tinsert(ConROC.SuggestedSpells, _DrainSoul);
+					_DrainSoul_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
@@ -480,6 +489,7 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 
 				if ConROC:CheckBox(ConROC_SM_AoE_SeedofCorruption) and ConROC_AoEButton:IsVisible() and _SeedofCorruption_RDY and _enemies_in_30yrds >= 3 then
 					tinsert(ConROC.SuggestedSpells, _SeedofCorruption);
+					_SeedofCorruption_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
@@ -527,18 +537,21 @@ function ConROC.Warlock.Damage(_, timeShift, currentSpell, gcd)
 
 				if ConROC:CheckBox(ConROC_SM_Filler_ShadowBolt) and _ShadowBolt_RDY then
 					tinsert(ConROC.SuggestedSpells, _ShadowBolt);
+					_ShadowBolt_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
 
 				if ConROC:CheckBox(ConROC_SM_Filler_Incinerate) and _Incinerate_RDY then
 					tinsert(ConROC.SuggestedSpells, _Incinerate);
+					_Incinerate_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
 
 				if ConROC:CheckBox(ConROC_SM_Filler_SearingPain) and _SearingPain_RDY then
 					tinsert(ConROC.SuggestedSpells, _SearingPain);
+					_SearingPain_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end

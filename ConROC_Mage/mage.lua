@@ -223,6 +223,7 @@ function ConROC.Mage.Damage(_, timeShift, currentSpell, gcd)
 
 					if ConROC:CheckBox(ConROC_SM_AoE_ArcaneExplosion) and _ArcaneExplosion_RDY and _target_in_melee then
 						tinsert(ConROC.SuggestedSpells, _ArcaneExplosion);
+						_ArcaneExplosion_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -236,6 +237,7 @@ function ConROC.Mage.Damage(_, timeShift, currentSpell, gcd)
 
 					if ConROC:CheckBox(ConROC_SM_AoE_Blizzard) and _Blizzard_RDY and not _target_in_melee then
 						tinsert(ConROC.SuggestedSpells, _Blizzard);
+						_Blizzard_RDY = false;
 						_Queue = _Queue + 1;
 						break;
 					end
@@ -297,24 +299,28 @@ function ConROC.Mage.Damage(_, timeShift, currentSpell, gcd)
 				-- Fillers
 				if ConROC:CheckBox(ConROC_SM_Filler_ArcaneBlast) and _ArcaneBlast_RDY then
 					tinsert(ConROC.SuggestedSpells, _ArcaneBlast);
+					_ArcaneBlast_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
 
 				if ConROC:CheckBox(ConROC_SM_Filler_Fireball) and _Fireball_RDY then
 					tinsert(ConROC.SuggestedSpells, _Fireball);
+					_Fireball_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
 
 				if ConROC:CheckBox(ConROC_SM_Filler_ArcaneMissiles) and _ArcaneMissiles_RDY then
 					tinsert(ConROC.SuggestedSpells, _ArcaneMissiles);
+					_ArcaneMissiles_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
 
 				if ConROC:CheckBox(ConROC_SM_Filler_Frostbolt) and _Frostbolt_RDY then
 					tinsert(ConROC.SuggestedSpells, _Frostbolt);
+					_Frostbolt_RDY = false;
 					_Queue = _Queue + 1;
 					break;
 				end
