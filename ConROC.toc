@@ -17,3 +17,4 @@ Locale\locale.xml
 
 buttons.lua
 helper.lua
+ttd.lua
