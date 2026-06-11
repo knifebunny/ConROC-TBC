@@ -333,10 +333,19 @@ function ConROC:UpdateAutoAoE()
 
 	local range     = ConROC.db.profile.autoAoERange     or "10"
 	local threshold = ConROC.db.profile.autoAoEThreshold or 3
+	local ttdMin    = ConROC.db.profile.autoAoEMinTTD    or 0
 
 	local enemies, _ = ConROC:Targets(range)
 
-	if enemies >= threshold then
+	-- TTD gate: when enabled, also require `threshold` enemies expected to live
+	-- at least `ttdMin` seconds. Enemies whose decay hasn't been measured yet
+	-- still count as alive, so this never blocks the opener of a fresh pull.
+	local pass = enemies >= threshold
+	if pass and ttdMin > 0 then
+		pass = ConROC:EnemiesAboveTTD(ttdMin) >= threshold
+	end
+
+	if pass then
 		if not ConROC_AoEButton:IsVisible() then
 			ConROC_AoEButton:Show()
 			ConROC_SingleButton:Hide()

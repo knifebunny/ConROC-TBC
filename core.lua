@@ -115,11 +115,13 @@ local defaultOptions = {
 		nameplateNotSelectedAlpha = tonumber(GetCVarDefault("nameplateNotSelectedAlpha")),
 		nameplatesMinAlpha = tonumber(GetCVarDefault("nameplateMinAlpha")),
 		nameplatesMaxAlpha = tonumber(GetCVarDefault("nameplateMaxAlpha")),
-		autoAoE          = false,
-		autoAoEThreshold = 3,
-		autoAoERange     = "10",
+		autoAoE           = false,
+		autoAoEThreshold  = 3,
+		autoAoERange      = "10",
+		autoAoEMinTTD     = 4,
+		enableTTDOverlay  = false,
 	}
-}	
+}
 
 local orientations = {
 		"Vertical",
@@ -319,6 +321,27 @@ local options = {
 			values = { ["Melee"] = "Melee (5 yds)", ["10"] = "10 yards", ["20"] = "20 yards", ["25"] = "25 yards", ["30"] = "30 yards" },
 			set = function(info, val) ConROC.db.profile.autoAoERange = val end,
 			get = function(info) return ConROC.db.profile.autoAoERange end
+		},
+		autoAoEMinTTD = {
+			name = 'Minimum Time-to-Live (sec)',
+			desc = 'Only count enemies expected to live at least this long. Prevents AOE switching on a near-dead pack. Set to 0 to disable the TTD gate.',
+			type = 'range',
+			width = 'double',
+			order = 9.4,
+			min = 0,
+			max = 10,
+			step = 1,
+			set = function(info, val) ConROC.db.profile.autoAoEMinTTD = val end,
+			get = function(info) return ConROC.db.profile.autoAoEMinTTD end
+		},
+		enableTTDOverlay = {
+			name = 'Show TTD overlay on primary icon',
+			desc = 'Displays live enemy count and shortest time-to-die in the bottom-left of the primary spell icon while in combat. Coloured yellow when an AoE rotation should be active.',
+			type = 'toggle',
+			width = 'full',
+			order = 9.5,
+			set = function(info, val) ConROC.db.profile.enableTTDOverlay = val end,
+			get = function(info) return ConROC.db.profile.enableTTDOverlay end
 		},
 		spacer10 = {
 			order = 10,
