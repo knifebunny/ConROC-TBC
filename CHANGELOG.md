@@ -18,6 +18,38 @@ This project began as a fork of [ConROC by Vae2009](https://github.com/Vae2009/C
 
 ---
 
+## [3.0.0] – Time-to-Die Engine + Auto-AoE Gating + Queue Lookahead
+
+### Added
+
+- **TTD ledger (`ttd.lua`)** – New per-enemy health-over-time tracker keyed by GUID. Polls target/focus/mouseover/`nameplate1..40`/`boss1..5` every 0.5s, samples HP%, derives a linear-slope kill rate over a 10-sample window, and exposes `ConROC:ShortestTTD()`, `ConROC:LongestTTD()`, `ConROC:EnemiesAboveTTD(seconds)`, `ConROC:TargetTTD()`, and `ConROC:TrackedEnemyCount()`. Hooks `COMBAT_LOG_EVENT_UNFILTERED` for fast death cleanup and wipes the ledger on combat end (`PLAYER_REGEN_ENABLED`). Hekili-inspired: the rotation engine can now ask "how many mobs will still be alive in N seconds" rather than just counting nameplates.
+- **TTD overlay option (`enableTTDOverlay`)** – Optional live overlay on the primary spell icon showing enemy count + shortest TTD in the bottom-left (yellow when AoE conditions are met). Defaults to off.
+
+### Changed
+
+- **Auto-AoE now gated on time-to-die** – `UpdateAutoAoE` now requires both nameplate count `>= autoAoEThreshold` **and** at least that many enemies expected to live `>= autoAoEMinTTD` seconds before switching to the AoE rotation. Enemies without a measured decay rate (fresh pulls) still count as alive, so the opener is never blocked — this only suppresses AoE on near-dead trash packs. New `autoAoEMinTTD` option (default 4s, range 0–10; set to 0 to restore count-only behavior), added to the Auto AOE Detection settings section.
+- **Queue-icon self-disable lookahead (all classes)** – After every `tinsert(SuggestedSpells, _X)`, the ability's `_RDY` flag is now cleared so the next pass of the priority loop walks to a *different* spell. Queue icons 2 and 3 now show meaningfully different next steps instead of duplicating icon 1. Added across Druid, Mage, Paladin, Priest, Shaman, and Warlock rotations (Hunter, Rogue, and Warrior already had it where it mattered). A cheap, display-only approximation of Hekili-style lookahead — it does not simulate cooldowns advancing.
+
+---
+
+## [2.13.0] – Shaman SoD Removal, Air Totem Toggle, Enhancement Fixes
+
+### Fixed
+
+- **Enhancement – Earth Shock effectively never fired** – Earth Shock was gated behind Clearcasting/execute conditions that almost never held for Enhancement. Removed the gate; Flame Shock is now applied first, then Earth Shock fills the shock cooldown per current TBC guide priority.
+
+### Changed
+
+- **Shaman – Removed all Season of Discovery code** – SoD is never active on the TBC client. Stripped Runes/Engrave, MaelstromWeapon/PowerSurge, and the Feral Spirit / Lava Burst / Lava Lash / Molten Blast / Earth Shield rune branches from `shaman.lua`, `shaman_ids.lua`, and `shaman_spellmenu.lua`, including the SoD "Shields" menu group.
+- **Shaman – Shields and Shamanistic Rage repointed to TBC spells** – Water Shield, Lightning Shield, and Shamanistic Rage on the Defense panel now reference the TBC abilities directly, removing the `IsSoD` if/else wrapper and the redundant `_TBC` / `_Rune` name suffixes.
+- **Enhancement – Melee totem maintenance expanded** – Now suggests Strength of Earth, Searing (or Magma + Fire Nova on AoE), and Mana Spring, where previously only Searing Totem was suggested in the Melee role. All suggestions remain gated by the existing "Suggest totems in rotation" option.
+
+### Added
+
+- **Shaman – Air Totem radio group** – New spell-menu option to choose Windfury Totem vs Grace of Air Totem per role, resolving the Air-slot conflict where both would otherwise overwrite each other.
+
+---
+
 ## [2.12.1] – Mage Frost Nova Rank 5 Fix
 
 ### Fixed
