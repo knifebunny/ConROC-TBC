@@ -6,6 +6,18 @@ This project began as a fork of [ConROC by Vae2009](https://github.com/Vae2009/C
 
 ---
 
+## [3.0.1] – Patch 2.5.6 Compatibility + Hunter Mend Pet Rank 8
+
+### Changed
+
+- **Interface bumped to 20506** – Live realms updated to TBC Anniversary patch 2.5.6 (released 2026-07-07). Updated `## Interface:` in all ten `.toc` files (`ConROC.toc` and the nine per-class modules) from `20505` to `20506` to clear the "out of date" flag in the addon list. No API changes in this patch affected the addon.
+
+### Fixed
+
+- **Hunter – Mend Pet capped at Rank 7 when Rank 8 is known** – `UpdateSpellID()` only checked up to `MendPetRank7` (`13544`, level 60) and the Rank 8 spell ID (`27046`, level 68) was absent from `ids.Rank`. Level 68+ hunters had Rank 8 on their bars but the rotation resolved to Rank 7, producing `Spell not found on action bars: Mend Pet Rank 7 (13544)`. Added `MendPetRank8 = 27046` to the rank table and prepended the Rank 8 check to the detection chain. (Reported on CurseForge.)
+
+---
+
 ## [2.12.1] – Mage Frost Nova Rank 5 Fix
 
 ### Fixed

@@ -1,7 +1,7 @@
 ## Title:-|cffFFFFFFConROC|r- |cff9482C9Warlock|r
 ## Version: @project-version@
 ## Author: Vae
-## Interface: 20505
+## Interface: 20506
 ## SavedVariablesPerCharacter: ConROCWarlockSpells
 ## Dependencies: ConROC
 ## LoadOnDemand: 1

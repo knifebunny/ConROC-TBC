@@ -2,7 +2,7 @@
 ## Notes: Rotation helper framework for TBC Anniversary.
 ## Version: @project-version@
 ## Author: Vae
-## Interface: 20505
+## Interface: 20506
 ## SavedVariables: ConROCPreferences
 ## OptionalDependencies: Bartender4, ElvUI, ButtonForge
 ## X-Curse-Project-ID: 1474412

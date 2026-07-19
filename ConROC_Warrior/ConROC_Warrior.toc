@@ -1,7 +1,7 @@
 ## Title:-|cffFFFFFFConROC|r- |cffC79C6EWarrior|r
 ## Version: @project-version@
 ## Author: Vae
-## Interface: 20505
+## Interface: 20506
 ## SavedVariablesPerCharacter: ConROCWarriorSpells
 ## Dependencies: ConROC
 ## LoadOnDemand: 1

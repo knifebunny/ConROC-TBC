@@ -88,6 +88,7 @@ ids.Rank = {
 	MendPetRank5 = 13542,
 	MendPetRank6 = 13543,
 	MendPetRank7 = 13544,
+	MendPetRank8 = 27046, -- TBC rank (level 68)
 	ScareBeastRank1 = 1513,
 	ScareBeastRank2 = 14326,
 	ScareBeastRank3 = 14327,
@@ -285,7 +286,8 @@ function ConROC:UpdateSpellID()
 	if IsSpellKnown(ids.Rank.ScareBeastRank3) then ids.Ability.ScareBeast = ids.Rank.ScareBeastRank3;
 	elseif IsSpellKnown(ids.Rank.ScareBeastRank2) then ids.Ability.ScareBeast = ids.Rank.ScareBeastRank2; end
 
-	if IsSpellKnown(ids.Rank.MendPetRank7) then ids.Ability.MendPet = ids.Rank.MendPetRank7;
+	if IsSpellKnown(ids.Rank.MendPetRank8) then ids.Ability.MendPet = ids.Rank.MendPetRank8;
+	elseif IsSpellKnown(ids.Rank.MendPetRank7) then ids.Ability.MendPet = ids.Rank.MendPetRank7;
 	elseif IsSpellKnown(ids.Rank.MendPetRank6) then ids.Ability.MendPet = ids.Rank.MendPetRank6;
 	elseif IsSpellKnown(ids.Rank.MendPetRank5) then ids.Ability.MendPet = ids.Rank.MendPetRank5;
 	elseif IsSpellKnown(ids.Rank.MendPetRank4) then ids.Ability.MendPet = ids.Rank.MendPetRank4;
